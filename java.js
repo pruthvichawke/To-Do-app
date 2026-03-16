@@ -1,5 +1,6 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const deadlineInput = document.getElementById("deadline"); // deadline input
 
 function addTask(){
     if(inputBox.value == ''){
@@ -7,13 +8,23 @@ function addTask(){
     }
     else{
         let li = document.createElement("li");
-        li.innerHTML = "📝 " + inputBox.value;   
+
+        // current date
+        let date = new Date().toLocaleDateString();
+
+        // deadline
+        let deadline = deadlineInput.value;
+
+        li.innerHTML = "📝 " + inputBox.value + " (" + date + " | Due: " + deadline + ")";
         listContainer.appendChild(li);
+
         let span = document.createElement("span");
         span.innerHTML = "\u00d7";
         li.appendChild(span);
     }
+
     inputBox.value = "";
+    deadlineInput.value = "";
     saveData();
 }
 
@@ -27,7 +38,6 @@ listContainer.addEventListener("click", function(e){
         saveData();
     }
 }, false);
-
 
 inputBox.addEventListener("keypress", function(e){
     if(e.key === "Enter"){
